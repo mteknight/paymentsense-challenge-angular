@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Include="Services\.Interfaces\ICountryService.cs" />
   </ItemGroup>
 
 </Project>
