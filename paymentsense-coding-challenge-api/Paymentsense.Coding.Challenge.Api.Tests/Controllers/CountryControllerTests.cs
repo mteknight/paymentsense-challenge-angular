@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 using FluentAssertions;
 
@@ -22,6 +24,9 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
         public CountryControllerTests()
         {
             var mockedService = new Mock<ICountryService>();
+            mockedService
+                .Setup(service => service.GetNames(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => new[] { "Test" });
 
             _controller = new CountryController(mockedService.Object);
         }
@@ -36,12 +41,12 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
         }
 
         [Fact]
-        public void GetCountryNames_OnInvoke_ReturnsSuccessWithCountryNames()
+        public async Task GetCountryNames_OnInvoke_ReturnsSuccessWithCountryNames()
         {
-            var result = _controller.GetNames().Result as OkObjectResult;
+            var result = (await _controller.GetNames(CancellationToken.None)).Result as OkObjectResult;
 
             result.StatusCode.Should().Be(StatusCodes.Status200OK);
-            result.Value.As<IEnumerable<CountryModel>>().Should().NotBeEmpty();
+            result.Value.As<IEnumerable<string>>().Should().NotBeEmpty();
         }
     }
 }

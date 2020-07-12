@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,9 +28,12 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
 
         [HttpGet]
         [Route("/names")]
-        public ActionResult<string[]> GetNames()
+        public async Task<ActionResult<string[]>> GetNames(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var countryNames = await _countryService.GetNames(cancellationToken)
+                .ConfigureAwait(false);
+
+            return Ok(countryNames);
         }
     }
 }
