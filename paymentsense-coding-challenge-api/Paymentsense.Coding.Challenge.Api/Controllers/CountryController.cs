@@ -9,7 +9,7 @@ using Paymentsense.Coding.Challenge.Api.Services;
 namespace Paymentsense.Coding.Challenge.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/")]
     public class CountryController : ControllerBase
     {
         private readonly ICountryService _countryService;
@@ -27,7 +27,7 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/names")]
+        [Route("names")]
         public async Task<ActionResult<string[]>> GetNames(CancellationToken cancellationToken)
         {
             var countryNames = await _countryService.GetNames(cancellationToken)
