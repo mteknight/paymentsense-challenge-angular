@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 using Paymentsense.Coding.Challenge.Api.Controllers;
-using Paymentsense.Coding.Challenge.Api.Models;
 using Paymentsense.Coding.Challenge.Api.Services;
 
 using Xunit;

@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Paymentsense.Coding.Challenge.Api.Services;
+
 namespace Paymentsense.Coding.Challenge.Api
 {
     public class Startup
@@ -29,6 +31,10 @@ namespace Paymentsense.Coding.Challenge.Api
                         .AllowAnyHeader();
                 });
             });
+
+            services
+                .AddHttpClient()
+                .AddScoped<ICountryService, CountryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
