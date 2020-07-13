@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { PaymentsenseCodingChallengeApiService } from './services';
 import { MockPaymentsenseCodingChallengeApiService } from './testing/mock-paymentsense-coding-challenge-api.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { element } from 'protractor';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -39,4 +40,24 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Paymentsense Coding Challenge!');
   });
+
+  it('should get list of country names', () => {
+
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    fixture.componentInstance.countryNames$
+      .subscribe((result: string[] )=> {
+
+        expect(result.length).toBeGreaterThan(0);
+      });
+  });
+
+  it('should render country names in li', () => {
+
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    let listElements = compiled.querySelectorAll("ul[id='countryNames'] li");
+    expect(listElements.length).toBe(3);
+  })
 });
