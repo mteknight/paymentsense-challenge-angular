@@ -4,8 +4,17 @@
   <h1>
     {{ title }}
   </h1>
-  <h2>... Paymentsense Coding Challenge API is <fa-icon [icon]=paymentsenseCodingChallengeApiActiveIcon
-                                                        [styles]="{ 'stroke': paymentsenseCodingChallengeApiActiveIconColour, 'color': paymentsenseCodingChallengeApiActiveIconColour }"></fa-icon> ...</h2>
+  <h2>
+    ... Paymentsense Coding Challenge API is <fa-icon [icon]=paymentsenseCodingChallengeApiActiveIcon
+                                                      [styles]="{ 'stroke': paymentsenseCodingChallengeApiActiveIconColour, 'color': paymentsenseCodingChallengeApiActiveIconColour }"></fa-icon> ...
+  </h2>
+</div>
+<div>
+  <ul id="countryNames">
+    <li *ngFor="let name of countryNames$ | async">
+      {{ name }}
+    </li>
+  </ul>
 </div>
 
 <router-outlet></router-outlet>

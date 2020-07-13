@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { PaymentsenseCodingChallengeApiService } from './services';
-import { take } from 'rxjs/operators';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
+
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+import { PaymentsenseCodingChallengeApiService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -16,22 +19,26 @@ export class AppComponent {
   public paymentsenseCodingChallengeApiActiveIcon = this.faThumbsDown;
   public paymentsenseCodingChallengeApiActiveIconColour = 'red';
 
+  public countryNames$: Observable<string[]>;
+
   constructor(private paymentsenseCodingChallengeApiService: PaymentsenseCodingChallengeApiService) {
     paymentsenseCodingChallengeApiService.getHealth().pipe(take(1))
-    .subscribe(
-      apiHealth => {
-        this.paymentsenseCodingChallengeApiIsActive = apiHealth === 'Healthy';
-        this.paymentsenseCodingChallengeApiActiveIcon = this.paymentsenseCodingChallengeApiIsActive
-          ? this.faThumbsUp
-          : this.faThumbsUp;
-        this.paymentsenseCodingChallengeApiActiveIconColour = this.paymentsenseCodingChallengeApiIsActive
-          ? 'green'
-          : 'red';
-      },
-      _ => {
-        this.paymentsenseCodingChallengeApiIsActive = false;
-        this.paymentsenseCodingChallengeApiActiveIcon = this.faThumbsDown;
-        this.paymentsenseCodingChallengeApiActiveIconColour = 'red';
-      });
+      .subscribe(
+        apiHealth => {
+          this.paymentsenseCodingChallengeApiIsActive = apiHealth === 'Healthy';
+          this.paymentsenseCodingChallengeApiActiveIcon = this.paymentsenseCodingChallengeApiIsActive
+            ? this.faThumbsUp
+            : this.faThumbsUp;
+          this.paymentsenseCodingChallengeApiActiveIconColour = this.paymentsenseCodingChallengeApiIsActive
+            ? 'green'
+            : 'red';
+        },
+        _ => {
+          this.paymentsenseCodingChallengeApiIsActive = false;
+          this.paymentsenseCodingChallengeApiActiveIcon = this.faThumbsDown;
+          this.paymentsenseCodingChallengeApiActiveIconColour = 'red';
+        });
+
+    this.countryNames$ = this.paymentsenseCodingChallengeApiService.getCountryNames();
   }
 }
