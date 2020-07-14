@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Country } from '../models/country';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,8 +16,8 @@ export class PaymentsenseCodingChallengeApiService {
     return this.httpClient.get('https://localhost:5001/health', { responseType: 'text' });
   }
 
-  public getCountryNames(): Observable<string[]> {
+  public getCountries(): Observable<Country[]> {
 
-    return this.httpClient.get<string[]>('https://localhost:5001/country/names');
+    return this.httpClient.get<Country[]>('https://localhost:5001/countries');
   }
 }

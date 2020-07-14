@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Paymentsense.Coding.Challenge.Api.Models;
 using Paymentsense.Coding.Challenge.Api.Services;
 
 namespace Paymentsense.Coding.Challenge.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]/")]
+    [Route("countries/")]
     public class CountryController : ControllerBase
     {
         private readonly ICountryService _countryService;
@@ -21,19 +22,12 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<string> Get()
+        public async Task<ActionResult<CountryModel>> Get(CancellationToken cancellationToken)
         {
-            return Ok("Paymentsense Coding Challenge!");
-        }
-
-        [HttpGet]
-        [Route("names")]
-        public async Task<ActionResult<string[]>> GetNames(CancellationToken cancellationToken)
-        {
-            var countryNames = await _countryService.GetNames(cancellationToken)
+            var countries = await _countryService.GetCountries(cancellationToken)
                 .ConfigureAwait(false);
 
-            return Ok(countryNames);
+            return Ok(countries);
         }
     }
 }

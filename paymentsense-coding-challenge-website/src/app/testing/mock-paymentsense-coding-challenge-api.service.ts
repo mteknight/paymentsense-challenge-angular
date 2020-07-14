@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Autofixture } from 'ts-autofixture/dist/src/index';
 
+import { Country } from '../models/country';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,11 +20,11 @@ export class MockPaymentsenseCodingChallengeApiService {
     return of('Healthy');
   }
 
-  public getCountryNames(): Observable<string[]> {
+  public getCountries(): Observable<Country[]> {
 
-    let countryNames: string[] = [];
-    while (countryNames.push(Autofixture.createString()) < 12);
+    let country: Country;
+    const countries = this.fixture.createMany(country, 12);
 
-    return of(countryNames);
+    return of(countries);
   }
 }

@@ -20,17 +20,7 @@ namespace Paymentsense.Coding.Challenge.Api.Services
 
         public static string Api => "https://restcountries.eu/rest/v2";
 
-        public async Task<IEnumerable<string>> GetNames(
-            CancellationToken cancellationToken)
-        {
-            var countries = await GetCountries(cancellationToken)
-                .ConfigureAwait(false);
-
-            return countries
-                .Select(country => country.Name);
-        }
-
-        private Task<IEnumerable<CountryModel>> GetCountries(CancellationToken cancellationToken)
+        public Task<IEnumerable<CountryModel>> GetCountries(CancellationToken cancellationToken)
         {
             var uri = new Uri($"{Api}/all");
 

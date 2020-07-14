@@ -49,7 +49,7 @@ describe('AppComponent', () => {
 
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    let countryNames = fixture.componentInstance.countryNamesPage
+    let countryNames = fixture.componentInstance.countriesPage
 
     expect(countryNames.length).toBe(10);
   });

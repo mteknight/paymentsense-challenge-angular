@@ -29,7 +29,7 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Services
         }
 
         [Fact]
-        public async Task GetNames_OnInvoke_ReturnsCountryNames()
+        public async Task GetCountries_OnInvoke_ReturnsCountryNames()
         {
             // Arrange
             var country = _fixture.Create<CountryModel[]>();
@@ -41,12 +41,12 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Services
             var sut = new CountryService(mockedApiService.Object);
 
             // Act
-            var countries = await sut.GetNames(CancellationToken.None)
+            var countries = await sut.GetCountries(CancellationToken.None)
                 .ConfigureAwait(false);
 
             // Assert
             countries.Should().NotBeEmpty();
-            countries.Should().Contain(country.First().Name);
+            countries.Should().NotContainNulls();
         }
     }
 }

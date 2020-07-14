@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 using Paymentsense.Coding.Challenge.Api.Controllers;
+using Paymentsense.Coding.Challenge.Api.Models;
 using Paymentsense.Coding.Challenge.Api.Services;
 
 using Xunit;
@@ -22,30 +23,29 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
 
         public CountryControllerTests()
         {
+            var countries = new[]
+            {
+                new CountryModel
+                {
+                    Name = "Test"
+                }
+            };
+
             var mockedService = new Mock<ICountryService>();
             mockedService
-                .Setup(service => service.GetNames(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => new[] { "Test" });
+                .Setup(service => service.GetCountries(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => countries);
 
             _controller = new CountryController(mockedService.Object);
         }
 
         [Fact]
-        public void Get_OnInvoke_ReturnsExpectedMessage()
-        {
-            var result = _controller.Get().Result as OkObjectResult;
-
-            result.StatusCode.Should().Be(StatusCodes.Status200OK);
-            result.Value.Should().Be("Paymentsense Coding Challenge!");
-        }
-
-        [Fact]
         public async Task GetCountryNames_OnInvoke_ReturnsSuccessWithCountryNames()
         {
-            var result = (await _controller.GetNames(CancellationToken.None)).Result as OkObjectResult;
+            var result = (await _controller.Get(CancellationToken.None)).Result as OkObjectResult;
 
             result.StatusCode.Should().Be(StatusCodes.Status200OK);
-            result.Value.As<IEnumerable<string>>().Should().NotBeEmpty();
+            result.Value.As<IEnumerable<CountryModel>>().Should().NotBeEmpty();
         }
     }
 }

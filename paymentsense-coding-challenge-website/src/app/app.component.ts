@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 
 import { PaymentsenseCodingChallengeApiService } from './services';
+import { Country } from './models/country';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ export class AppComponent {
   public paymentsenseCodingChallengeApiActiveIcon = this.faThumbsDown;
   public paymentsenseCodingChallengeApiActiveIconColour = 'red';
 
-  public countryNamesPage: string[];
+  public countriesPage: Country[];
   public pageSize: number = 10;
   public listLength: number = 1;
   public pageSizeOptions: number[] = [10, 25, 50, 100];
@@ -55,19 +56,19 @@ export class AppComponent {
       currentPage = event.pageIndex + 1;
     }
 
-    this.paymentsenseCodingChallengeApiService.getCountryNames()
+    this.paymentsenseCodingChallengeApiService.getCountries()
       .subscribe((
-        countryNames: string[]) => {
+        countries: Country[]) => {
 
         const pageStart = (currentPage - 1) * this.pageSize;
         const pageEnd = currentPage * this.pageSize;
 
-        this.listLength = countryNames.length;
-        this.countryNamesPage = countryNames.slice(pageStart, pageEnd);
+        this.listLength = countries.length;
+        this.countriesPage = countries.slice(pageStart, pageEnd);
         },
         error => {
 
-          this.countryNamesPage = [error];
+          this.countriesPage = [error];
         });
 
       return event;
