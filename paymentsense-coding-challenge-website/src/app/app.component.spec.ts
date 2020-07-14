@@ -73,4 +73,17 @@ describe('AppComponent', () => {
 
     expect(listElementImages.length).toBe(10);
   })
+
+  it('should render details for selected country', () => {
+
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    let selectedCountry = fixture.componentInstance.selectedCountry = fixture.componentInstance.countriesPage[1];
+    fixture.detectChanges();
+    let countryDetailsPanel = compiled.querySelector("div[id='countryDetails']");
+
+    expect(selectedCountry).not.toBeNull();
+    expect(countryDetailsPanel).not.toBeNull();
+  })
 });

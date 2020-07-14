@@ -12,7 +12,7 @@
 <div>
   <ul id="countries">
     <li *ngFor="let country of countriesPage">
-      {{ country.name }}
+      <span (click)="selectedCountry = country">{{ country.name }}</span>
       <img src="{{ country.flag }}">
     </li>
   </ul>
@@ -22,5 +22,39 @@
                [pageSizeOptions]="pageSizeOptions"
                (page)="pageEvent = getCountryNames($event)">
 </mat-paginator>
-
+<div id="countryDetails" *ngIf="selectedCountry" style="margin-left: 100px;">
+  <h5>Country Details</h5>
+  <span>Name:</span><span style="margin-left: 5px;">{{ selectedCountry.name }}</span>
+  <div class="clearfix"></div>
+  <span>Population:</span><span style="margin-left: 5px;">{{ selectedCountry.population }}</span>
+  <div>
+    <span>Timezones</span>
+    <ul style="list-style-type: none;">
+      <li *ngFor="let timezone of selectedCountry.timezones">
+        <span>{{ timezone }}</span>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <span>Currencies</span>
+    <ul style="list-style-type: none;">
+      <li *ngFor="let currency of selectedCountry.currencies">
+        <span>Name:</span><span style="margin-left: 5px;">{{currency.name}}</span>
+        <div class="clearfix"></div>
+        <span>Symbol:</span><span style="margin-left: 5px;">{{currency.symbol}}</span>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <span>Languages</span>
+    <ul style="list-style-type: none;">
+      <li *ngFor="let language of selectedCountry.languages">
+        <span>Name:</span><span style="margin-left: 5px;">{{language.name}}</span>
+      </li>
+    </ul>
+  </div>
+  <span>Capital:</span><span style="margin-left: 5px;">{{ selectedCountry.capital }}</span>
+  <div class="clearfix"></div>
+  <span>Borders:</span><span style="margin-left: 5px;">{{ selectedCountry.borders?.join(', ') }}</span>
+</div>
 <router-outlet></router-outlet>

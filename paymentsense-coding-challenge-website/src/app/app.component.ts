@@ -26,6 +26,8 @@ export class AppComponent {
   public listLength: number = 1;
   public pageSizeOptions: number[] = [10, 25, 50, 100];
 
+  public selectedCountry: Country;
+
   constructor(private paymentsenseCodingChallengeApiService: PaymentsenseCodingChallengeApiService) {
     paymentsenseCodingChallengeApiService.getHealth().pipe(take(1))
       .subscribe(
