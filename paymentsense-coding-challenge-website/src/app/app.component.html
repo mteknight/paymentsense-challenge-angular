@@ -10,9 +10,10 @@
   </h2>
 </div>
 <div>
-  <ul id="countryNames">
+  <ul id="countries">
     <li *ngFor="let country of countriesPage">
       {{ country.name }}
+      <img src="{{ country.flag }}">
     </li>
   </ul>
 </div>

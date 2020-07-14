@@ -59,8 +59,18 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    let listElements = compiled.querySelectorAll("ul[id='countryNames'] li");
+    let listElements = compiled.querySelectorAll("ul[id='countries'] li");
 
     expect(listElements.length).toBe(10);
+  })
+
+  it('should render country flags in li', () => {
+
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    let listElementImages = compiled.querySelectorAll("ul[id='countries'] li img");
+
+    expect(listElementImages.length).toBe(10);
   })
 });
