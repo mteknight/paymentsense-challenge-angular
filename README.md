@@ -11,6 +11,10 @@
 Please ensure that all code is completed to a standard that you would consider production ready - Feel free to change the template provided if you feel necessary
 
 ## Remarks
-1. This test is very extensive if you consider doing both front and backend in TDD. I believe it should have been timeboxed;
+1. This test is very extensive if you consider doing both front and backend in TDD.
 2. I can safely manage frontend implementation, but I am way stronger in the backend;
 3. Do not mind the ugly layout. I am not a web designer but could have done better with extra time available.
+4. I had to cut it short after having spent many hours with the implementatiuon. I do not believe it is production ready yet due to:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- There are some tests missing for the frontend part;  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- The Country Details panel should become a component itself, in my opinion;  
+**Nevertheless, I am confident that what was implemented can provide enough insight regarding my skills.**
