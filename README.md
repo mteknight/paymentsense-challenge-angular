@@ -9,3 +9,8 @@
   i.e. population, time zones, currencies, language, capital city and bordering countries.
 
 Please ensure that all code is completed to a standard that you would consider production ready - Feel free to change the template provided if you feel necessary
+
+## Remarks
+1. This test is very extensive if you consider doing both front and backend in TDD. I believe it should have been timeboxed;
+2. I can safely manage frontend implementation, but I am way stronger in the backend;
+3. Do not mind the ugly layout. I am not a web designer but could have done better with extra time available.
