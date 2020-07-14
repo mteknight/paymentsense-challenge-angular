@@ -11,10 +11,15 @@
 </div>
 <div>
   <ul id="countryNames">
-    <li *ngFor="let name of countryNames$ | async">
+    <li *ngFor="let name of countryNamesPage">
       {{ name }}
     </li>
   </ul>
 </div>
+<mat-paginator [length]="listLength"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = getCountryNames($event)">
+</mat-paginator>
 
 <router-outlet></router-outlet>

@@ -4,14 +4,17 @@ import { AppComponent } from './app.component';
 import { PaymentsenseCodingChallengeApiService } from './services';
 import { MockPaymentsenseCodingChallengeApiService } from './testing/mock-paymentsense-coding-challenge-api.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { element } from 'protractor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        BrowserAnimationsModule,
+        MaterialModule
       ],
       declarations: [
         AppComponent
@@ -38,6 +41,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
+
     expect(compiled.querySelector('h1').textContent).toContain('Paymentsense Coding Challenge!');
   });
 
@@ -45,11 +49,9 @@ describe('AppComponent', () => {
 
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    fixture.componentInstance.countryNames$
-      .subscribe((result: string[] )=> {
+    let countryNames = fixture.componentInstance.countryNamesPage
 
-        expect(result.length).toBeGreaterThan(0);
-      });
+    expect(countryNames.length).toBe(10);
   });
 
   it('should render country names in li', () => {
@@ -58,6 +60,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     let listElements = compiled.querySelectorAll("ul[id='countryNames'] li");
-    expect(listElements.length).toBe(3);
+
+    expect(listElements.length).toBe(10);
   })
 });

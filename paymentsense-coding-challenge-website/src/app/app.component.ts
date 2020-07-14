@@ -3,6 +3,7 @@ import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
 
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { PageEvent } from '@angular/material/paginator';
 
 import { PaymentsenseCodingChallengeApiService } from './services';
 
@@ -19,7 +20,10 @@ export class AppComponent {
   public paymentsenseCodingChallengeApiActiveIcon = this.faThumbsDown;
   public paymentsenseCodingChallengeApiActiveIconColour = 'red';
 
-  public countryNames$: Observable<string[]>;
+  public countryNamesPage: string[];
+  public pageSize: number = 10;
+  public listLength: number = 1;
+  public pageSizeOptions: number[] = [10, 25, 50, 100];
 
   constructor(private paymentsenseCodingChallengeApiService: PaymentsenseCodingChallengeApiService) {
     paymentsenseCodingChallengeApiService.getHealth().pipe(take(1))
@@ -39,6 +43,33 @@ export class AppComponent {
           this.paymentsenseCodingChallengeApiActiveIconColour = 'red';
         });
 
-    this.countryNames$ = this.paymentsenseCodingChallengeApiService.getCountryNames();
+        this.getCountryNames();
+  }
+
+  public getCountryNames(event?: PageEvent): PageEvent {
+
+    let currentPage: number = 1;
+    if (event) {
+
+      this.pageSize = event.pageSize;
+      currentPage = event.pageIndex + 1;
+    }
+
+    this.paymentsenseCodingChallengeApiService.getCountryNames()
+      .subscribe((
+        countryNames: string[]) => {
+
+        const pageStart = (currentPage - 1) * this.pageSize;
+        const pageEnd = currentPage * this.pageSize;
+
+        this.listLength = countryNames.length;
+        this.countryNamesPage = countryNames.slice(pageStart, pageEnd);
+        },
+        error => {
+
+          this.countryNamesPage = [error];
+        });
+
+      return event;
   }
 }
