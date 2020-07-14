@@ -34,6 +34,8 @@ namespace Paymentsense.Coding.Challenge.Api
 
             services
                 .AddHttpClient()
+                .AddMemoryCache()
+                .AddSingleton<IApiService, ApiService>()
                 .AddScoped<ICountryService, CountryService>();
         }
 

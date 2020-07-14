@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
+using AutoFixture;
 
 using FluentAssertions;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using Moq;
-using Moq.Protected;
 
 using Paymentsense.Coding.Challenge.Api.Models;
 using Paymentsense.Coding.Challenge.Api.Services;
@@ -21,15 +21,24 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Services
 {
     public class CountryServiceTests
     {
+        private readonly Fixture _fixture;
+
+        public CountryServiceTests()
+        {
+            _fixture = new Fixture();
+        }
+
         [Fact]
         public async Task GetNames_OnInvoke_ReturnsCountryNames()
         {
             // Arrange
-            var country = new CountryModel { Name = "TestCountry" };
-            var responseContent = new[] { country };
-            var response = CreateSuccessfulResponse(responseContent);
-            var httpClientFactory = CreateMockedHttpClientFactory(response);
-            var sut = new CountryService(httpClientFactory);
+            var country = _fixture.Create<CountryModel[]>();
+            var mockedApiService = new Mock<IApiService>();
+            mockedApiService
+                .Setup(service => service.Get<IEnumerable<CountryModel>>(It.IsAny<Uri>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(country);
+
+            var sut = new CountryService(mockedApiService.Object);
 
             // Act
             var countries = await sut.GetNames(CancellationToken.None)
@@ -37,34 +46,7 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Services
 
             // Assert
             countries.Should().NotBeEmpty();
-        }
-
-        private static IHttpClientFactory CreateMockedHttpClientFactory(HttpResponseMessage response)
-        {
-            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
-            mockHttpMessageHandler
-                .Protected()
-                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(response);
-
-            var httpClient = new HttpClient(mockHttpMessageHandler.Object);
-            var httpClientFactoryMock = new Mock<IHttpClientFactory>();
-            httpClientFactoryMock
-                .Setup(httpClientFactory => httpClientFactory.CreateClient(It.IsAny<string>()))
-                .Returns(httpClient);
-
-            return httpClientFactoryMock.Object;
-        }
-
-        private static HttpResponseMessage CreateSuccessfulResponse<T>(T data)
-        {
-            var json = JsonSerializer.Serialize(data);
-
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(json),
-            };
+            countries.Should().Contain(country.First().Name);
         }
     }
 }

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Services\.Interfaces\IApiService.cs" />
     <Compile Include="Services\.Interfaces\ICountryService.cs" />
   </ItemGroup>
 
